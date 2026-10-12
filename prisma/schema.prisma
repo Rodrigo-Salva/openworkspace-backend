@@ -1,0 +1,223 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  uid            BigInt            @id @default(autoincrement())
+  uuid           String            @unique @default(uuid()) @db.Uuid
+  email          String            @unique
+  password       String
+  name           String            @default("")
+  metadata       Json?             @default("{}")
+  encryptionSign String?           @map("encryption_sign")
+  createdAt      DateTime          @default(now()) @map("created_at")
+  updatedAt      DateTime          @updatedAt @map("updated_at")
+  deletedAt      DateTime?         @map("deleted_at")
+
+  workspaces     Workspace[]       @relation("WorkspaceOwner")
+  memberships    WorkspaceMember[]
+  quickNotes     QuickNote[]
+
+  @@map("af_user")
+}
+
+model Workspace {
+  workspaceId         String            @id @default(uuid()) @map("workspace_id") @db.Uuid
+  databaseStorageId   String            @default(uuid()) @map("database_storage_id") @db.Uuid
+  ownerUid            BigInt            @map("owner_uid")
+  workspaceName       String            @default("My Workspace") @map("workspace_name")
+  workspaceType       Int               @default(0) @map("workspace_type")
+  createdAt           DateTime          @default(now()) @map("created_at")
+  deletedAt           DateTime?         @map("deleted_at")
+
+  owner               User              @relation("WorkspaceOwner", fields: [ownerUid], references: [uid], onDelete: Cascade)
+  members             WorkspaceMember[]
+  views               View[]
+  collabs             Collab[]
+  collabSnapshots     CollabSnapshot[]
+  blobs               BlobMetadata[]
+  quickNotes          QuickNote[]
+  chats               Chat[]
+
+  @@map("af_workspace")
+}
+
+model WorkspaceMember {
+  uid         BigInt
+  workspaceId String    @map("workspace_id") @db.Uuid
+  roleId      Int       @default(1) @map("role_id")
+  position    Int?      @default(0)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  user        User      @relation(fields: [uid], references: [uid], onDelete: Cascade)
+  workspace   Workspace @relation(fields: [workspaceId], references: [workspaceId], onDelete: Cascade)
+
+  @@id([uid, workspaceId])
+  @@map("af_workspace_member")
+}
+
+model View {
+  viewId       String    @id @default(uuid()) @map("view_id") @db.Uuid
+  workspaceId  String    @map("workspace_id") @db.Uuid
+  parentViewId String?   @map("parent_view_id") @db.Uuid
+  name         String    @default("Untitled")
+  layout       Int       @default(0) // 0: Document, 1: Grid, 2: Board/Kanban, 3: Calendar
+  icon         Json?
+  extra        Json?
+  isFavorite   Boolean   @default(false) @map("is_favorite")
+  isPinned     Boolean   @default(false) @map("is_pinned")
+  order        Int       @default(0)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  workspace    Workspace @relation(fields: [workspaceId], references: [workspaceId], onDelete: Cascade)
+
+  @@map("af_view")
+}
+
+model Collab {
+  oid          String    @id @db.Uuid
+  partitionKey Int       @map("partition_key")
+  blob         Bytes
+  len          Int?
+  ownerUid     BigInt    @map("owner_uid")
+  workspaceId  String    @map("workspace_id") @db.Uuid
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  workspace    Workspace @relation(fields: [workspaceId], references: [workspaceId], onDelete: Cascade)
+
+  @@map("af_collab")
+}
+
+model CollabSnapshot {
+  sid         BigInt    @id @default(autoincrement())
+  oid         String
+  blob        Bytes
+  len         Int
+  encrypt     Int       @default(0)
+  workspaceId String    @map("workspace_id") @db.Uuid
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [workspaceId], onDelete: Cascade)
+
+  @@map("af_collab_snapshot")
+}
+
+model BlobMetadata {
+  fileId      String    @id @map("file_id")
+  workspaceId String    @map("workspace_id") @db.Uuid
+  fileSize    BigInt    @map("file_size")
+  fileType    String?   @map("file_type")
+  fileStatus  Int       @default(0) @map("file_status")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [workspaceId], onDelete: Cascade)
+
+  @@map("af_blob_metadata")
+}
+
+model QuickNote {
+  quickNoteId String    @id @default(uuid()) @map("quick_note_id") @db.Uuid
+  workspaceId String    @map("workspace_id") @db.Uuid
+  uid         BigInt
+  data        Json
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [workspaceId], onDelete: Cascade)
+  user        User      @relation(fields: [uid], references: [uid], onDelete: Cascade)
+
+  @@map("af_quick_note")
+}
+
+model TemplateCategory {
+  categoryId   String    @id @default(uuid()) @map("category_id") @db.Uuid
+  name         String
+  icon         String    @default("")
+  description  String    @default("")
+  bgColor      String    @default("#ffffff") @map("bg_color")
+  categoryType Int       @default(0) @map("category_type")
+  priority     Int       @default(0)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  templates   TemplateViewCategory[]
+
+  @@map("af_template_category")
+}
+
+model TemplateCreator {
+  creatorId          String    @id @default(uuid()) @map("creator_id") @db.Uuid
+  name               String
+  avatarUrl          String?   @map("avatar_url")
+  createdAt          DateTime  @default(now()) @map("created_at")
+
+  templates          TemplateView[]
+
+  @@map("af_template_creator")
+}
+
+model TemplateView {
+  viewId        String    @id @map("view_id") @db.Uuid
+  name          String
+  description   String
+  about         String
+  viewUrl       String    @map("view_url")
+  creatorId     String    @map("creator_id") @db.Uuid
+  isNewTemplate Boolean   @default(false) @map("is_new_template")
+  isFeatured    Boolean   @default(false) @map("is_featured")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  creator       TemplateCreator @relation(fields: [creatorId], references: [creatorId], onDelete: Cascade)
+  categories    TemplateViewCategory[]
+
+  @@map("af_template_view")
+}
+
+model TemplateViewCategory {
+  viewId      String       @map("view_id") @db.Uuid
+  categoryId  String       @map("category_id") @db.Uuid
+
+  template    TemplateView @relation(fields: [viewId], references: [viewId], onDelete: Cascade)
+  category    TemplateCategory @relation(fields: [categoryId], references: [categoryId], onDelete: Cascade)
+
+  @@id([viewId, categoryId])
+  @@map("af_template_view_template_category")
+}
+
+model Chat {
+  chatId      String        @id @default(uuid()) @map("chat_id") @db.Uuid
+  workspaceId String        @map("workspace_id") @db.Uuid
+  name        String        @default("Chat")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  deletedAt   DateTime?     @map("deleted_at")
+
+  workspace   Workspace     @relation(fields: [workspaceId], references: [workspaceId], onDelete: Cascade)
+  messages    ChatMessage[]
+
+  @@map("af_chat")
+}
+
+model ChatMessage {
+  messageId   BigInt        @id @default(autoincrement()) @map("message_id")
+  chatId      String        @map("chat_id") @db.Uuid
+  author      Json
+  content     String
+  createdAt   DateTime      @default(now()) @map("created_at")
+  deletedAt   DateTime?     @map("deleted_at")
+
+  chat        Chat          @relation(fields: [chatId], references: [chatId], onDelete: Cascade)
+
+  @@map("af_chat_messages")
+}
