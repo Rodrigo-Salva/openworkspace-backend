@@ -12,7 +12,7 @@ export class InviteCodeController {
     return {
       code,
       status: 'valid',
-      inviter_name: 'AppFlowy Team',
+      inviter_name: 'OpenWorkspace Team',
       created_at: new Date().toISOString(),
     };
   }

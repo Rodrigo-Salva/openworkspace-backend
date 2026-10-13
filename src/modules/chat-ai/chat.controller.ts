@@ -113,7 +113,7 @@ export class ChatController {
     return {
       chat_id: chatId,
       message_id: messageId,
-      answer: 'Esta es una respuesta generada por AppFlowy Cloud AI.',
+      answer: 'Esta es una respuesta generada por OpenWorkspace Cloud AI.',
     };
   }
 
@@ -132,7 +132,7 @@ export class ChatController {
     const chunks = [
       'Hola! ',
       'Soy el asistente ',
-      'de AppFlowy Cloud. ',
+      'de OpenWorkspace Cloud. ',
       'Tu espacio está listo para colaborar.',
     ];
 

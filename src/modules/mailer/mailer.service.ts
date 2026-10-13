@@ -24,7 +24,7 @@ export class MailerService {
     const user = this.configService.get<string>('SMTP_USER') || this.configService.get<string>('SMTP_USERNAME');
     const pass = this.configService.get<string>('SMTP_PASS') || this.configService.get<string>('SMTP_PASSWORD');
     const secure = this.configService.get<string>('SMTP_SECURE') === 'true' || port === 465;
-    this.fromAddress = this.configService.get<string>('SMTP_FROM') || 'AppFlowy Cloud <noreply@appflowy.io>';
+    this.fromAddress = this.configService.get<string>('SMTP_FROM') || 'OpenWorkspace Cloud <noreply@openworkspace.io>';
 
     if (host && user) {
       try {
@@ -76,7 +76,7 @@ export class MailerService {
     // Console Dev Fallback
     const divider = '─'.repeat(70);
     this.logger.log(`\n┌${divider}┐\n` +
-      `│ 📧 [APPFLOWY MAILER - CONSOLE FALLBACK]\n` +
+      `│ 📧 [OPENWORKSPACE MAILER - CONSOLE FALLBACK]\n` +
       `│ To:      ${options.to}\n` +
       `│ Subject: ${options.subject}\n` +
       `│ Body:\n` +
@@ -87,15 +87,15 @@ export class MailerService {
   }
 
   async sendMagicLink(email: string, link: string) {
-    const subject = 'Your AppFlowy login link';
+    const subject = 'Your OpenWorkspace login link';
     const html = this.renderEmailLayout({
-      title: 'Sign in to AppFlowy',
+      title: 'Sign in to OpenWorkspace',
       greeting: 'Hello,',
       paragraphs: [
-        'You requested a secure login link for your AppFlowy account.',
+        'You requested a secure login link for your OpenWorkspace account.',
         'Click the button below to sign in instantly. This link will expire shortly.',
       ],
-      buttonText: 'Sign In to AppFlowy',
+      buttonText: 'Sign In to OpenWorkspace',
       buttonUrl: link,
       footnote: `If you did not request this link, you can safely ignore this email. Link URL: ${link}`,
     });
@@ -104,17 +104,17 @@ export class MailerService {
       to: email,
       subject,
       html,
-      text: `Sign in to AppFlowy: ${link}`,
+      text: `Sign in to OpenWorkspace: ${link}`,
     });
   }
 
   async sendWorkspaceInvite(email: string, params: WorkspaceInviteParam) {
-    const subject = `${params.username} invited you to ${params.workspaceName} in AppFlowy`;
+    const subject = `${params.username} invited you to ${params.workspaceName} in OpenWorkspace`;
     const html = this.renderEmailLayout({
       title: 'Workspace Invitation',
       greeting: 'Hello,',
       paragraphs: [
-        `<strong>${params.username}</strong> has invited you to collaborate in the workspace <strong>"${params.workspaceName}"</strong> on AppFlowy.`,
+        `<strong>${params.username}</strong> has invited you to collaborate in the workspace <strong>"${params.workspaceName}"</strong> on OpenWorkspace.`,
         'Join your team to build, organize, and manage documents, databases, and projects together.',
       ],
       buttonText: 'Accept Invitation',
@@ -131,7 +131,7 @@ export class MailerService {
   }
 
   async sendWorkspaceAccessRequest(recipientEmail: string, params: WorkspaceAccessRequestParam) {
-    const subject = `${params.username} requested access to ${params.workspaceName} in AppFlowy`;
+    const subject = `${params.username} requested access to ${params.workspaceName} in OpenWorkspace`;
     const html = this.renderEmailLayout({
       title: 'Access Request',
       greeting: params.recipientName ? `Hello ${params.recipientName},` : 'Hello Workspace Admin,',
@@ -175,7 +175,7 @@ export class MailerService {
   }
 
   async sendPageMention(recipientEmail: string, params: PageMentionNotificationMailerParam) {
-    const subject = `${params.mentionerName} has mentioned you in ${params.mentionedPageName} in AppFlowy`;
+    const subject = `${params.mentionerName} has mentioned you in ${params.mentionedPageName} in OpenWorkspace`;
     const html = this.renderEmailLayout({
       title: 'New Mention',
       greeting: params.recipientName ? `Hello ${params.recipientName},` : 'Hello,',
@@ -251,7 +251,7 @@ export class MailerService {
 <body style="background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 40px 16px;">
   <div style="max-width: 560px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border: 1px solid #e5e7eb;">
     <div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); padding: 32px 24px; text-align: center;">
-      <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">AppFlowy</h1>
+      <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">OpenWorkspace</h1>
       <p style="color: #e0e7ff; margin: 6px 0 0 0; font-size: 14px;">Your open source Notion alternative</p>
     </div>
     <div style="padding: 32px 28px;">
@@ -263,7 +263,7 @@ export class MailerService {
     </div>
     <div style="background-color: #f9fafb; border-top: 1px solid #e5e7eb; padding: 20px 24px; text-align: center;">
       <p style="color: #6b7280; font-size: 12px; margin: 0;">
-        Sent with ❤️ by AppFlowy Cloud • Open-source collaborative workspace
+        Sent with ❤️ by OpenWorkspace Cloud • Open-source collaborative workspace
       </p>
     </div>
   </div>

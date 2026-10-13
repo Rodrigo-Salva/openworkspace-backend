@@ -1,6 +1,6 @@
-# 🚀 AppFlowy Cloud Backend (NestJS Re-Architecture)
+# 🚀 OpenWorkspace Backend (NestJS Architecture)
 
-> **Clon completo, modular y de alto rendimiento del backend de AppFlowy Cloud implementado en NestJS (TypeScript), con documentación interactiva Swagger OpenAPI 3.0, sincronización CRDT Yjs en tiempo real vía WebSockets, almacenamiento S3/MinIO, worker de indexación vectorial en background con `pgvector` y servicio de correo SMTP.**
+> **Backend completo, modular y de alto rendimiento para OpenWorkspace implementado en NestJS (TypeScript), con documentación interactiva Swagger OpenAPI 3.0, sincronización CRDT Yjs en tiempo real vía WebSockets, almacenamiento S3/MinIO, worker de indexación vectorial en background con `pgvector` y servicio de correo SMTP.**
 
 ![NestJS](https://img.shields.io/badge/NestJS-10.4-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
@@ -58,7 +58,7 @@ Este proyecto es una reimplementación completa del backend oficial de **AppFlow
 El proyecto sigue los principios de Clean Architecture y la modularidad idiomática de NestJS:
 
 ```text
-appflowy-backend-nest/
+openworkspace-backend/
 ├── prisma/
 │   └── schema.prisma                 # Definición de modelos relacionales e índices PostgreSQL
 ├── src/
@@ -373,7 +373,7 @@ OPENAI_EMBEDDING_MODEL="text-embedding-3-small"
 
 ### 1. Clonar / Navegar al Proyecto
 ```bash
-cd /home/rodrigo/Escritorio/JavaScript/app-flowy/appflowy-backend-nest
+cd /home/rodrigo/Escritorio/JavaScript/app-flowy/openworkspace-backend
 ```
 
 ### 2. Instalar Dependencias

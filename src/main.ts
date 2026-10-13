@@ -41,9 +41,9 @@ async function bootstrap() {
 
   // 4. Configuración de Swagger / OpenAPI
   const config = new DocumentBuilder()
-    .setTitle('AppFlowy Cloud API (NestJS)')
+    .setTitle('OpenWorkspace API (NestJS)')
     .setDescription(
-      'Clon completo y moderno del backend de AppFlowy Cloud en NestJS con TypeScript y documentación Swagger interactiva. Soporta Web, Desktop y Mobile.',
+      'Backend completo y moderno para OpenWorkspace en NestJS con TypeScript y documentación Swagger interactiva. Soporta Web, Desktop y Mobile.',
     )
     .setVersion('1.0.0')
     .addBearerAuth({
@@ -71,7 +71,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document, {
-    customSiteTitle: 'AppFlowy Cloud API Docs',
+    customSiteTitle: 'OpenWorkspace API Docs',
     swaggerOptions: {
       persistAuthorization: true,
       filter: true,
@@ -82,7 +82,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3001;
   await app.listen(port);
 
-  logger.log(`🚀 Servidor AppFlowy NestJS corriendo en: http://localhost:${port}`);
+  logger.log(`🚀 Servidor OpenWorkspace NestJS corriendo en: http://localhost:${port}`);
   logger.log(`📚 Documentación Swagger interactiva: http://localhost:${port}/api/docs`);
 }
 

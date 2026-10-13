@@ -21,7 +21,7 @@ export class UpdateChatSettingsDto {
 }
 
 export class CreateChatMessageDto {
-  @ApiProperty({ example: '¿Cómo funciona AppFlowy Cloud?' })
+  @ApiProperty({ example: '¿Cómo funciona OpenWorkspace Cloud?' })
   @IsNotEmpty()
   @IsString()
   content: string;

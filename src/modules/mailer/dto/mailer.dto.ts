@@ -7,7 +7,7 @@ export class SendTestMailDto {
   @IsNotEmpty()
   to: string;
 
-  @ApiProperty({ example: 'Welcome to AppFlowy', description: 'Email subject' })
+  @ApiProperty({ example: 'Welcome to OpenWorkspace', description: 'Email subject' })
   @IsString()
   @IsNotEmpty()
   subject: string;

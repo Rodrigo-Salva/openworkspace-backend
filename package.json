@@ -1,7 +1,7 @@
 {
-  "name": "appflowy-backend-nest",
+  "name": "openworkspace-backend",
   "version": "0.1.0",
-  "description": "AppFlowy Cloud backend cloned and modernized in NestJS with Swagger OpenAPI documentation",
+  "description": "OpenWorkspace backend modernized in NestJS with Swagger OpenAPI documentation",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

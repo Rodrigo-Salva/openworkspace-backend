@@ -102,7 +102,7 @@ export class ChatAiService {
     const message = await this.prisma.chatMessage.create({
       data: {
         chatId,
-        author: dto.author || { role: 'assistant', name: 'AppFlowy AI' },
+        author: dto.author || { role: 'assistant', name: 'OpenWorkspace AI' },
         content: dto.content,
       },
     });
@@ -131,7 +131,7 @@ export class ChatAiService {
       chat_id: chatId,
       model: 'gpt-4o',
       temperature: 0.7,
-      system_prompt: 'You are AppFlowy AI Assistant.',
+      system_prompt: 'You are OpenWorkspace AI Assistant.',
     };
   }
 
@@ -147,7 +147,7 @@ export class ChatAiService {
       questions: [
         '¿Puedes resumir este documento?',
         '¿Cuáles son los puntos clave de este proyecto?',
-        '¿Cómo organizar mis vistas en AppFlowy?',
+        '¿Cómo organizar mis vistas en OpenWorkspace?',
       ],
     };
   }

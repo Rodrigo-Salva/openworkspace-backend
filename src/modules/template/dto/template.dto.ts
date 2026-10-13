@@ -47,7 +47,7 @@ export class GetTemplateCategoriesQueryDto {
 }
 
 export class CreateTemplateCreatorDto {
-  @ApiProperty({ example: 'AppFlowy Team' })
+  @ApiProperty({ example: 'OpenWorkspace Team' })
   @IsNotEmpty()
   @IsString()
   name: string;

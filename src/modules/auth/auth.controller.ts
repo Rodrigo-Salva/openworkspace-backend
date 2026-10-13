@@ -20,8 +20,8 @@ export class AuthController {
   health() {
     return {
       version: '1.0.0',
-      name: 'GoTrue (NestJS)',
-      description: 'GoTrue authentication engine reimplemented in NestJS',
+      name: 'OpenWorkspace Auth (NestJS)',
+      description: 'OpenWorkspace authentication engine implemented in NestJS',
     };
   }
 

@@ -33,7 +33,7 @@ export class AiController {
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
 
-    const sampleText = `Completando tu texto: "${dto.text}" con capacidades avanzadas de IA en AppFlowy Cloud.`;
+    const sampleText = `Completando tu texto: "${dto.text}" con capacidades avanzadas de IA en OpenWorkspace Cloud.`;
     const words = sampleText.split(' ');
 
     for (const word of words) {

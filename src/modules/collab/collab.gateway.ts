@@ -60,7 +60,7 @@ export class CollabGateway
     );
 
     // Enviar confirmación o ping inicial
-    client.send(JSON.stringify({ type: 'ready', server: 'AppFlowy-Cloud-NestJS' }));
+    client.send(JSON.stringify({ type: 'ready', server: 'OpenWorkspace-Cloud-NestJS' }));
   }
 
   handleDisconnect(client: WebSocket) {
