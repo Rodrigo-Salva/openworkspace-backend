@@ -538,8 +538,3 @@ CMD ["node", "dist/main.js"]
 ```
 
 ---
-
-## 📄 Licencia
-
-Este proyecto es de código abierto con fines de modernización y extensión de la plataforma **AppFlowy Cloud**.
-Original AppFlowy Cloud © AppFlowy-IO. Re-implementación en NestJS desarrollada para máxima escalabilidad y mantenibilidad.
